@@ -1,8 +1,10 @@
-# EffectCraft CLI for OpenDeck
+# EffectCraft Live Controls for OpenDeck
 
 [Português do Brasil](#português-do-brasil) · [Contributing](CONTRIBUTING.md) · [EffectCraft](https://github.com/storytold/effectcraft) · [OpenDeck](https://github.com/nekename/OpenDeck)
 
-An independent Linux-only [OpenDeck](https://github.com/nekename/OpenDeck) plugin that puts useful [EffectCraft](https://github.com/storytold/effectcraft) editing controls on a Stream Deck. It does not bundle EffectCraft: point it at the `effectcraft-cli` installed on your machine.
+An independent Linux-only [OpenDeck](https://github.com/nekename/OpenDeck) plugin that turns a Stream Deck, Stream Deck+, or D200X-style encoder deck into a practical live control surface for [EffectCraft](https://github.com/storytold/effectcraft). Use dedicated keys for transport, frame and keyframe navigation, layer work, effects, and the Render Queue; use encoders for relative opacity, rotation, and scale edits.
+
+The dedicated controls connect to the running EffectCraft project's control bridge, so they operate on the composition and selection already on screen. The configurable `effectcraft-cli` action is still included for the occasional workflow that needs a command not covered by a ready-made control; it is no longer the primary way to use the deck.
 
 Each action stores an executable path and a JSON array of arguments. The plugin launches the executable directly, without `sh -c` or another shell. That makes JSON parameters, spaces in paths, and untrusted filenames safe to pass as arguments.
 
@@ -17,6 +19,12 @@ Each action stores an executable path and a JSON array of arguments. The plugin 
 - Configurable executable path, working directory, timeout (1–300 seconds), label, and optional output summary on the key.
 - Test a configuration in the Property Inspector before assigning it to a key.
 - Linux x86_64 release ZIP created on every CI run; tagged versions are published as GitHub Releases.
+
+## Real editing workflows
+
+- **Cut a talking-head edit:** use Previous/Next Frame to find the cut, press **Split Layer**, then use the Opacity dial and its press action to keyframe a quick fade without reaching for the mouse.
+- **Build a motion-graphics pass:** add a Text, Solid, Shape, or Adjustment layer, apply an effect, and navigate only the animated keyframes while the encoder makes small relative rotation or scale corrections.
+- **Send a review render:** show the Render Queue, start the queued render, and keep a Stop Render key on the deck for a fast abort when the work changes.
 
 ## Requirements
 
@@ -113,7 +121,9 @@ MIT. EffectCraft and OpenDeck are independent upstream projects with their own l
 
 # Português do Brasil
 
-Plugin independente, somente para Linux, do [OpenDeck](https://github.com/nekename/OpenDeck) que coloca controles úteis de edição do [EffectCraft](https://github.com/storytold/effectcraft) no Stream Deck. O EffectCraft não é incluído no plugin: informe o `effectcraft-cli` instalado na sua máquina.
+Plugin independente, somente para Linux, do [OpenDeck](https://github.com/nekename/OpenDeck) que transforma Stream Deck, Stream Deck+ ou uma mesa com encoders no estilo D200X em uma superfície de controle ao vivo do [EffectCraft](https://github.com/storytold/effectcraft). Há teclas prontas para reprodução, frames, keyframes, camadas, efeitos e fila de renderização, além de encoders para ajustes relativos de opacidade, rotação e escala.
+
+As ações prontas se conectam à bridge do projeto EffectCraft já aberto e trabalham sobre a composição e a seleção visíveis na tela. A ação configurável `effectcraft-cli` continua disponível para o fluxo pontual que não tiver uma tecla pronta, mas não é mais a forma principal de usar o deck.
 
 Cada ação guarda o executável e uma lista JSON de argumentos. O plugin chama o executável diretamente, sem `sh -c` nem outro shell. Assim, JSON, caminhos com espaços e nomes de arquivos não confiáveis são passados com segurança.
 
@@ -128,6 +138,12 @@ Cada ação guarda o executável e uma lista JSON de argumentos. O plugin chama 
 - Caminho do executável, diretório de trabalho, timeout (1–300 s), rótulo e resumo de saída configuráveis.
 - Botão de teste no Property Inspector antes de associar a ação a uma tecla.
 - ZIP Linux x86_64 gerado em toda execução da CI; tags são publicadas como Releases.
+
+## Fluxos de edição reais
+
+- **Cortar uma entrevista:** use Frame anterior/próximo para encontrar o corte, pressione **Split Layer** e use o dial de Opacidade — incluindo o pressionar para criar keyframe — para montar uma transição rápida sem recorrer ao mouse.
+- **Criar motion graphics:** adicione Texto, Sólido, Forma ou Adjustment Layer, aplique um efeito, navegue somente pelos keyframes animados e faça correções pequenas de rotação ou escala pelo encoder.
+- **Enviar uma renderização para revisão:** mostre a Render Queue, inicie a fila e mantenha uma tecla Stop Render no deck para interromper rapidamente quando o trabalho mudar.
 
 ## Requisitos e instalação
 
