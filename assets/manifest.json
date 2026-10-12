@@ -1,0 +1,29 @@
+{
+  "Name": "EffectCraft CLI",
+  "Description": "Run EffectCraft CLI and automation commands safely from OpenDeck (Linux).",
+  "Author": "LuizGustavoWT",
+  "Version": "0.1.0",
+  "PluginUUID": "wt.luizgustavo.getcraft.effectcraft",
+  "CodePaths": {
+    "x86_64-unknown-linux-gnu": "x86_64-unknown-linux-gnu/bin/getcraft-effectcraft-opendeck"
+  },
+  "CodePathLin": "x86_64-unknown-linux-gnu/bin/getcraft-effectcraft-opendeck",
+  "Icon": "assets/icon",
+  "Category": "GetCraft",
+  "OS": [{ "Platform": "linux" }],
+  "Actions": [{
+    "UUID": "wt.luizgustavo.getcraft.effectcraft.run",
+    "Name": "Run EffectCraft CLI",
+    "Icon": "assets/action",
+    "States": [{
+      "Image": "assets/action",
+      "TitleAlignment": "bottom",
+      "TitleColor": "#FFFFFF",
+      "FontSize": "12"
+    }],
+    "Controllers": ["Keypad", "Encoder"],
+    "SupportedInMultiActions": true,
+    "Tooltip": "Run any EffectCraft CLI command using safe JSON arguments.",
+    "PropertyInspectorPath": "propertyInspector/run.html"
+  }]
+}
