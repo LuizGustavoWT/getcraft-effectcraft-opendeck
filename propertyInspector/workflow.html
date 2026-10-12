@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EffectCraft Live Control</title>
+  <link rel="stylesheet" href="run.css">
+</head>
+<body>
+  <main>
+    <h1>EffectCraft Live Control</h1>
+    <p class="hint">Controls the project open in EffectCraft. Start it with <code>effectcraft --control 9877</code>; no new demo project is created.</p>
+    <label>EffectCraft CLI executable
+      <input id="executable" type="text" placeholder="effectcraft-cli">
+    </label>
+    <label>Live-control port
+      <input id="bridgePort" type="number" min="1" max="65535" value="9877">
+    </label>
+    <label>Action
+      <select id="control">
+        <option value="playback">Play / stop current preview</option>
+        <option value="previousFrame">Previous frame</option>
+        <option value="nextFrame">Next frame</option>
+        <option value="previousKey">Previous keyframe / marker</option>
+        <option value="nextKey">Next keyframe / marker</option>
+        <option value="splitLayer">Split selected layer at playhead</option>
+        <option value="addText">Add text layer</option>
+        <option value="addSolid">Add solid layer</option>
+        <option value="addShape">Add rectangle shape layer</option>
+        <option value="addAdjustment">Add adjustment layer</option>
+        <option value="opacityKey">Toggle opacity keyframe</option>
+        <option value="rotationKey">Toggle rotation keyframe</option>
+        <option value="applyEffect">Apply effect to selected layer</option>
+        <option value="showRenderQueue">Show Render Queue panel</option>
+        <option value="renderQueue">Start checked Render Queue items</option>
+        <option value="stopRender">Stop active render</option>
+        <option value="undo">Undo</option>
+        <option value="redo">Redo</option>
+      </select>
+    </label>
+    <label data-for="addText">Text for a new text layer
+      <input id="text" type="text" placeholder="New Text">
+    </label>
+    <label data-for="addSolid">Colour for a new solid
+      <input id="color" type="text" placeholder="#4f8cff">
+    </label>
+    <label data-for="applyEffect">Effect name or ID
+      <input id="effect" type="text" placeholder="Gaussian Blur">
+    </label>
+    <label>Working directory <span class="optional">optional</span>
+      <input id="workingDirectory" type="text" placeholder="/home/me/Projects/animation">
+    </label>
+    <div class="grid">
+      <label>Key title <span class="optional">optional</span>
+        <input id="title" type="text" placeholder="Uses the action name">
+      </label>
+      <label>Timeout (seconds)
+        <input id="timeoutSeconds" type="number" min="1" max="300" value="15">
+      </label>
+    </div>
+    <p id="status" role="status">Assign this action to any key or encoder press.</p>
+  </main>
+  <script>
+    let socket, context;
+    const $ = (id) => document.getElementById(id);
+    const fields = ["executable", "bridgePort", "control", "text", "color", "effect", "workingDirectory", "title", "timeoutSeconds"];
+    function settings() {
+      return {
+        executable: $("executable").value.trim(), bridgePort: $("bridgePort").value.trim(),
+        control: $("control").value, text: $("text").value, color: $("color").value,
+        effect: $("effect").value, workingDirectory: $("workingDirectory").value.trim(),
+        title: $("title").value.trim(), timeoutSeconds: Number($("timeoutSeconds").value) || 15,
+      };
+    }
+    function persist() { if (socket && context) socket.send(JSON.stringify({event:"setSettings", context, payload:settings()})); }
+    function updateVisibility() {
+      const action = $("control").value;
+      document.querySelectorAll("[data-for]").forEach((row) => row.hidden = row.dataset.for !== action);
+    }
+    function connectElgatoStreamDeckSocket(port, propertyInspectorUUID, registerEvent, info, actionInfo) {
+      const action = JSON.parse(actionInfo); context = action.context;
+      const saved = (action.payload && action.payload.settings) || {};
+      $("executable").value = saved.executable || ""; $("bridgePort").value = saved.bridgePort || "9877";
+      $("control").value = saved.control || "playback"; $("text").value = saved.text || "New Text";
+      $("color").value = saved.color || "#4f8cff"; $("effect").value = saved.effect || "Gaussian Blur";
+      $("workingDirectory").value = saved.workingDirectory || ""; $("title").value = saved.title || "";
+      $("timeoutSeconds").value = saved.timeoutSeconds || 15;
+      socket = new WebSocket(`ws://localhost:${port}`);
+      socket.onopen = () => socket.send(JSON.stringify({event:registerEvent, uuid:propertyInspectorUUID}));
+      fields.forEach((id) => $(id).addEventListener(id === "control" ? "change" : "input", () => { updateVisibility(); persist(); }));
+      updateVisibility();
+    }
+  </script>
+</body>
+</html>

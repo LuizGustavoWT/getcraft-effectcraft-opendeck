@@ -3,9 +3,9 @@ body { margin: 0; background: #171719; color: #f4f4f5; font-size: 13px; }
 main { padding: 14px; }
 h1 { margin: 0 0 6px; font-size: 17px; }
 label { display: block; margin-top: 12px; font-weight: 600; }
-input, textarea { box-sizing: border-box; width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #4b4b52; border-radius: 5px; background: #26262b; color: inherit; font: inherit; }
+input, textarea, select { box-sizing: border-box; width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #4b4b52; border-radius: 5px; background: #26262b; color: inherit; font: inherit; }
 textarea { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; resize: vertical; }
-input:focus, textarea:focus { border-color: #a78bfa; outline: none; }
+input:focus, textarea:focus, select:focus { border-color: #a78bfa; outline: none; }
 .hint, .optional { color: #b0b0bb; font-size: 11px; font-weight: 400; line-height: 1.35; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 .check { display: flex; align-items: center; gap: 8px; font-weight: 400; }
