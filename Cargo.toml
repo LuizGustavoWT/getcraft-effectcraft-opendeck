@@ -1,6 +1,6 @@
 [package]
 name = "getcraft-effectcraft-opendeck"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 license = "MIT"
 description = "OpenDeck plugin for safely running EffectCraft CLI commands on Linux"

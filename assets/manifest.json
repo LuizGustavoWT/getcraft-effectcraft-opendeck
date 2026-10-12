@@ -2,7 +2,7 @@
   "Name": "EffectCraft CLI",
   "Description": "Live timeline, layers, effects, render-queue and rotary property controls for EffectCraft on OpenDeck (Linux).",
   "Author": "LuizGustavoWT",
-  "Version": "0.2.0",
+  "Version": "0.2.1",
   "PluginUUID": "wt.luizgustavo.getcraft.effectcraft",
   "CodePaths": {
     "x86_64-unknown-linux-gnu": "x86_64-unknown-linux-gnu/bin/getcraft-effectcraft-opendeck"
