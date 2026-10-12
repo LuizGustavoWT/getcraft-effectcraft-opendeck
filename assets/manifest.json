@@ -1,8 +1,8 @@
 {
-  "Name": "EffectCraft CLI",
+  "Name": "EffectCraft Controls",
   "Description": "Live timeline, layers, effects, render-queue and rotary property controls for EffectCraft on OpenDeck (Linux).",
   "Author": "LuizGustavoWT",
-  "Version": "0.2.1",
+  "Version": "0.3.0",
   "PluginUUID": "wt.luizgustavo.getcraft.effectcraft",
   "CodePaths": {
     "x86_64-unknown-linux-gnu": "x86_64-unknown-linux-gnu/bin/getcraft-effectcraft-opendeck"
@@ -13,11 +13,21 @@
   "OS": [{ "Platform": "linux" }],
   "Actions": [
     {
+      "UUID": "wt.luizgustavo.getcraft.effectcraft.launch",
+      "Name": "Open EffectCraft",
+      "Icon": "assets/launch",
+      "States": [{"Image":"assets/launch","TitleAlignment":"bottom","TitleColor":"#FFFFFF","FontSize":"12"}],
+      "Controllers": ["Keypad"],
+      "SupportedInMultiActions": true,
+      "Tooltip": "Open EffectCraft with its local control port already enabled.",
+      "PropertyInspectorPath": "propertyInspector/launch.html"
+    },
+    {
       "UUID": "wt.luizgustavo.getcraft.effectcraft.run",
       "Name": "Run EffectCraft CLI",
-      "Icon": "assets/action",
+      "Icon": "assets/terminal",
       "States": [{
-        "Image": "assets/action",
+        "Image": "assets/terminal",
         "TitleAlignment": "bottom",
         "TitleColor": "#FFFFFF",
         "FontSize": "12"
@@ -30,9 +40,9 @@
     {
       "UUID": "wt.luizgustavo.getcraft.effectcraft.control",
       "Name": "EffectCraft Live Control",
-      "Icon": "assets/action",
+      "Icon": "assets/live",
       "States": [{
-        "Image": "assets/action",
+        "Image": "assets/live",
         "TitleAlignment": "bottom",
         "TitleColor": "#FFFFFF",
         "FontSize": "12"
@@ -45,9 +55,9 @@
     {
       "UUID": "wt.luizgustavo.getcraft.effectcraft.dial",
       "Name": "EffectCraft Property Dial",
-      "Icon": "assets/action",
+      "Icon": "assets/dial",
       "States": [{
-        "Image": "assets/action",
+        "Image": "assets/dial",
         "TitleAlignment": "bottom",
         "TitleColor": "#FFFFFF",
         "FontSize": "12"
