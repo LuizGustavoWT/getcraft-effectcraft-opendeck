@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EffectCraft Property Dial</title>
+  <link rel="stylesheet" href="run.css">
+</head>
+<body>
+  <main>
+    <h1>EffectCraft Property Dial</h1>
+    <p class="hint">Use on an encoder with EffectCraft running as <code>effectcraft --control 9877</code>. Turn changes the selected layer at the playhead; press toggles its keyframe.</p>
+    <label>EffectCraft CLI executable
+      <input id="executable" type="text" placeholder="effectcraft-cli">
+    </label>
+    <label>Live-control port
+      <input id="bridgePort" type="number" min="1" max="65535" value="9877">
+    </label>
+    <label>Property
+      <select id="property">
+        <option value="opacity">Opacity (%)</option>
+        <option value="rotation">Rotation (degrees)</option>
+        <option value="scale">Scale (%)</option>
+        <option value="custom">Custom numeric property</option>
+      </select>
+    </label>
+    <label id="customRow" hidden>Custom property path
+      <input id="customPath" type="text" placeholder="effects/Gaussian Blur#1/Blurriness">
+    </label>
+    <label>Increment per encoder tick
+      <input id="step" type="number" step="any" value="1">
+    </label>
+    <label>Working directory <span class="optional">optional</span>
+      <input id="workingDirectory" type="text" placeholder="/home/me/Projects/animation">
+    </label>
+    <div class="grid">
+      <label>Key title <span class="optional">optional</span>
+        <input id="title" type="text" placeholder="Shows current property">
+      </label>
+      <label>Timeout (seconds)
+        <input id="timeoutSeconds" type="number" min="1" max="300" value="15">
+      </label>
+    </div>
+    <p id="status" role="status">For a custom path, inspect the selected layer with the generic action's command catalog or <code>effectcraft-cli props - - --flat</code>.</p>
+  </main>
+  <script>
+    let socket, context;
+    const $ = (id) => document.getElementById(id);
+    const fields = ["executable", "bridgePort", "property", "customPath", "step", "workingDirectory", "title", "timeoutSeconds"];
+    function settings() { return {
+      executable: $("executable").value.trim(), bridgePort: $("bridgePort").value.trim(), property: $("property").value,
+      customPath: $("customPath").value.trim(), step: Number($("step").value) || 1,
+      workingDirectory: $("workingDirectory").value.trim(), title: $("title").value.trim(), timeoutSeconds: Number($("timeoutSeconds").value) || 15,
+    }; }
+    function persist() { if (socket && context) socket.send(JSON.stringify({event:"setSettings", context, payload:settings()})); }
+    function visibility() { $("customRow").hidden = $("property").value !== "custom"; }
+    function connectElgatoStreamDeckSocket(port, propertyInspectorUUID, registerEvent, info, actionInfo) {
+      const action = JSON.parse(actionInfo); context = action.context; const saved = (action.payload && action.payload.settings) || {};
+      $("executable").value = saved.executable || ""; $("bridgePort").value = saved.bridgePort || "9877";
+      $("property").value = saved.property || "opacity"; $("customPath").value = saved.customPath || "";
+      $("step").value = saved.step || 1; $("workingDirectory").value = saved.workingDirectory || "";
+      $("title").value = saved.title || ""; $("timeoutSeconds").value = saved.timeoutSeconds || 15;
+      socket = new WebSocket(`ws://localhost:${port}`); socket.onopen = () => socket.send(JSON.stringify({event:registerEvent, uuid:propertyInspectorUUID}));
+      fields.forEach((id) => $(id).addEventListener(id === "property" ? "change" : "input", () => { visibility(); persist(); })); visibility();
+    }
+  </script>
+</body>
+</html>

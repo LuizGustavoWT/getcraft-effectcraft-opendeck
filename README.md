@@ -2,13 +2,16 @@
 
 [Português do Brasil](#português-do-brasil) · [Contributing](CONTRIBUTING.md) · [EffectCraft](https://github.com/storytold/effectcraft) · [OpenDeck](https://github.com/nekename/OpenDeck)
 
-An independent Linux-only [OpenDeck](https://github.com/nekename/OpenDeck) plugin for running every available [EffectCraft CLI](https://github.com/storytold/effectcraft) command from a Stream Deck key. It does not bundle EffectCraft: point it at the `effectcraft-cli` installed on your machine.
+An independent Linux-only [OpenDeck](https://github.com/nekename/OpenDeck) plugin that puts useful [EffectCraft](https://github.com/storytold/effectcraft) editing controls on a Stream Deck. It does not bundle EffectCraft: point it at the `effectcraft-cli` installed on your machine.
 
 Each action stores an executable path and a JSON array of arguments. The plugin launches the executable directly, without `sh -c` or another shell. That makes JSON parameters, spaces in paths, and untrusted filenames safe to pass as arguments.
 
 ## Features
 
-- One configurable **Run EffectCraft CLI** action for keypad keys and encoders.
+- **EffectCraft Live Control**: playback, frame/keyframe navigation, split layer, add text/solid/shape/adjustment layers, add an effect, toggle transform keyframes, and show/start/stop the Render Queue.
+- **EffectCraft Property Dial** for Stream Deck+ and Ulanzi D200X-style encoders: turn to adjust the selected layer's opacity, rotation, scale, or a custom numeric property; press to toggle its keyframe at the playhead.
+- The live controls talk to EffectCraft's control bridge, so they operate on the project and selection already on screen.
+- One configurable **Run EffectCraft CLI** escape hatch for keypad keys and encoders.
 - Supports every EffectCraft CLI subcommand, option, and future addition: the action forwards the exact JSON argument array you configure.
 - Loads the installed CLI's command or tool catalog in the Property Inspector and creates an app-specific, editable action template.
 - Configurable executable path, working directory, timeout (1–300 seconds), label, and optional output summary on the key.
@@ -20,14 +23,15 @@ Each action stores an executable path and a JSON array of arguments. The plugin 
 - Linux x86_64
 - OpenDeck with OpenAction-compatible plugin support
 - EffectCraft and `effectcraft-cli` installed and available in `PATH`, or its absolute path entered in the Property Inspector
+- For the live controls, launch the app with `effectcraft --control 9877` (or set the matching port in each action)
 
 ## Install
 
 1. Download `getcraft-effectcraft-opendeck-linux-x86_64.zip` from the [latest release](../../releases/latest).
 2. In OpenDeck, open **Plugins** → **Install from file** and select the ZIP. Do not extract or rename the `.sdPlugin` directory.
-3. Drag **EffectCraft CLI → Run EffectCraft CLI** to a key.
-4. Enter the CLI path if `effectcraft-cli` is not in `PATH`, then enter a JSON argument array.
-5. Use **Test command**. A green check means the CLI exited successfully; an alert means that its error summary is available in the Property Inspector and OpenDeck logs.
+3. Start EffectCraft with `effectcraft --control 9877`.
+4. Drag **EffectCraft Live Control** to keys for the timeline, layer, effects and Render Queue actions. Add **EffectCraft Property Dial** to an encoder for opacity, rotation or scale.
+5. The generic **Run EffectCraft CLI** action remains available for any command not covered by a dedicated control.
 
 ## Configuration and examples
 
@@ -40,6 +44,23 @@ The **Arguments** field must contain a JSON array of strings. It is not a shell 
 Use the exact argument syntax shown by `effectcraft-cli --help` for project, file, export, and live-app control operations. The generic array accepts every documented subcommand and option.
 
 The Property Inspector's **Load command catalog** button asks the installed CLI for the catalog supported by this application. Selecting an ID fills an app-specific, editable argument template; use **Test command** after adding the parameters and options required by your installed CLI version. The generic JSON array remains the canonical path to every CLI capability.
+
+## Suggested deck layout
+
+| Control | Suggested action |
+| --- | --- |
+| Key 1 | Play / Stop current preview |
+| Key 2 / 3 | Previous / Next frame |
+| Key 4 / 5 | Previous / Next keyframe |
+| Key 6 | Split Layer |
+| Key 7 | Add Text |
+| Key 8 | Apply Effect (for example Gaussian Blur) |
+| Key 9 | Show Render Queue |
+| Encoder 1 | Property Dial: Opacity, step 1 |
+| Encoder 2 | Property Dial: Rotation, step 1 |
+| Encoder 3 | Property Dial: Scale, step 1 |
+
+The dial reads the live selected layer before changing it, so it makes a relative change instead of overwriting a value. Its press action toggles a keyframe for that same property.
 
 ## CI/CD and release
 
@@ -92,13 +113,16 @@ MIT. EffectCraft and OpenDeck are independent upstream projects with their own l
 
 # Português do Brasil
 
-Plugin independente, somente para Linux, do [OpenDeck](https://github.com/nekename/OpenDeck) para executar todos os comandos disponíveis da [CLI do EffectCraft](https://github.com/storytold/effectcraft) a partir de uma tecla do Stream Deck. O EffectCraft não é incluído no plugin: informe o `effectcraft-cli` instalado na sua máquina.
+Plugin independente, somente para Linux, do [OpenDeck](https://github.com/nekename/OpenDeck) que coloca controles úteis de edição do [EffectCraft](https://github.com/storytold/effectcraft) no Stream Deck. O EffectCraft não é incluído no plugin: informe o `effectcraft-cli` instalado na sua máquina.
 
 Cada ação guarda o executável e uma lista JSON de argumentos. O plugin chama o executável diretamente, sem `sh -c` nem outro shell. Assim, JSON, caminhos com espaços e nomes de arquivos não confiáveis são passados com segurança.
 
 ## Recursos
 
-- Ação configurável **Run EffectCraft CLI** para teclas e encoders.
+- **EffectCraft Live Control**: reprodução, navegação por frames/keyframes, corte da layer, novas layers, efeitos e fila de renderização.
+- **EffectCraft Property Dial**: para encoder do Stream Deck+ ou Ulanzi D200X, ajusta opacidade, rotação, escala ou uma propriedade numérica customizada; pressionar alterna o keyframe no playhead.
+- Os controles usam a bridge do EffectCraft e alteram o projeto que já está aberto na tela.
+- Ação configurável **Run EffectCraft CLI** continua disponível para comandos avançados.
 - Todos os subcomandos, opções e futuras adições da CLI: a ação repassa exatamente o vetor JSON configurado.
 - Catálogo dinâmico de comandos ou ferramentas da CLI no Property Inspector, com modelo de ação editável e específico do aplicativo.
 - Caminho do executável, diretório de trabalho, timeout (1–300 s), rótulo e resumo de saída configuráveis.
@@ -107,13 +131,13 @@ Cada ação guarda o executável e uma lista JSON de argumentos. O plugin chama 
 
 ## Requisitos e instalação
 
-Você precisa de Linux x86_64, OpenDeck compatível com OpenAction e EffectCraft com `effectcraft-cli` no `PATH` (ou o caminho absoluto no Property Inspector).
+Você precisa de Linux x86_64, OpenDeck compatível com OpenAction e EffectCraft com `effectcraft-cli` no `PATH` (ou o caminho absoluto no Property Inspector). Para as ações ao vivo, abra o EffectCraft com `effectcraft --control 9877`.
 
 1. Baixe `getcraft-effectcraft-opendeck-linux-x86_64.zip` na [release mais recente](../../releases/latest).
 2. No OpenDeck, abra **Plugins** → **Install from file** e escolha o ZIP. Não extraia nem renomeie a pasta `.sdPlugin`.
-3. Arraste **EffectCraft CLI → Run EffectCraft CLI** para uma tecla.
-4. Configure o caminho da CLI, se necessário, e o vetor JSON de argumentos.
-5. Use **Test command**. O check verde indica sucesso; o alerta mostra que houve erro, cujo resumo aparece no inspetor e nos logs do OpenDeck.
+3. Inicie o EffectCraft com `effectcraft --control 9877`.
+4. Arraste **EffectCraft Live Control** para as teclas e **EffectCraft Property Dial** para os encoders.
+5. Use a ação genérica **Run EffectCraft CLI** apenas para um comando não coberto pelas ações prontas.
 
 ## Configuração
 
