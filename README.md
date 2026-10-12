@@ -10,6 +10,7 @@ Each action stores an executable path and a JSON array of arguments. The plugin 
 
 ## Features
 
+- **Open EffectCraft** starts the desktop app with the selected loopback host and control port used by the live project bridge.
 - **EffectCraft Live Control**: playback, frame/keyframe navigation, split layer, add text/solid/shape/adjustment layers, add an effect, toggle transform keyframes, and show/start/stop the Render Queue.
 - **EffectCraft Property Dial** for Stream Deck+ and Ulanzi D200X-style encoders: turn to adjust the selected layer's opacity, rotation, scale, or a custom numeric property; press to toggle its keyframe at the playhead.
 - The live controls talk to EffectCraft's control bridge, so they operate on the project and selection already on screen.
@@ -37,8 +38,8 @@ Each action stores an executable path and a JSON array of arguments. The plugin 
 
 1. Download `getcraft-effectcraft-opendeck-linux-x86_64.zip` from the [latest release](../../releases/latest).
 2. In OpenDeck, open **Plugins** → **Install from file** and select the ZIP. Do not extract or rename the `.sdPlugin` directory.
-3. Start EffectCraft with `effectcraft --control 9877`.
-4. Drag **EffectCraft Live Control** to keys for the timeline, layer, effects and Render Queue actions. Add **EffectCraft Property Dial** to an encoder for opacity, rotation or scale.
+3. Drag **Open EffectCraft** to a key, set the desktop executable and control host/port, then press it.
+4. Drag **EffectCraft Live Control** to keys for the timeline, layer, effects and Render Queue actions. Add **EffectCraft Property Dial** to an encoder using the same port.
 5. The generic **Run EffectCraft CLI** action remains available for any command not covered by a dedicated control.
 
 ## Configuration and examples
@@ -129,6 +130,7 @@ Cada ação guarda o executável e uma lista JSON de argumentos. O plugin chama 
 
 ## Recursos
 
+- **Open EffectCraft** abre o aplicativo com o host loopback e a porta de controle usados pela bridge ao vivo.
 - **EffectCraft Live Control**: reprodução, navegação por frames/keyframes, corte da layer, novas layers, efeitos e fila de renderização.
 - **EffectCraft Property Dial**: para encoder do Stream Deck+ ou Ulanzi D200X, ajusta opacidade, rotação, escala ou uma propriedade numérica customizada; pressionar alterna o keyframe no playhead.
 - Os controles usam a bridge do EffectCraft e alteram o projeto que já está aberto na tela.
@@ -151,8 +153,8 @@ Você precisa de Linux x86_64, OpenDeck compatível com OpenAction e EffectCraft
 
 1. Baixe `getcraft-effectcraft-opendeck-linux-x86_64.zip` na [release mais recente](../../releases/latest).
 2. No OpenDeck, abra **Plugins** → **Install from file** e escolha o ZIP. Não extraia nem renomeie a pasta `.sdPlugin`.
-3. Inicie o EffectCraft com `effectcraft --control 9877`.
-4. Arraste **EffectCraft Live Control** para as teclas e **EffectCraft Property Dial** para os encoders.
+3. Arraste **Open EffectCraft** para uma tecla, configure executável, host e porta, depois pressione-a.
+4. Arraste **EffectCraft Live Control** para as teclas e **EffectCraft Property Dial** para os encoders usando a mesma porta.
 5. Use a ação genérica **Run EffectCraft CLI** apenas para um comando não coberto pelas ações prontas.
 
 ## Configuração
